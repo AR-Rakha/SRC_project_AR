@@ -24,6 +24,10 @@ let p3_color;
 
 let s=3;
 
+let scrollPoint=1;
+
+let maxPoints=4;
+
 //Catmull–Rom spline
 //This spine consists if multiple cubic bezier curves
 //First we have some anchor points
@@ -73,16 +77,16 @@ function draw()
 
 	
 
-	if(keyIsDown(49)){
+	if(mouseIsPressed && scrollPoint==1){
 		p0.x=mouseX;
 		p0.y=mouseY;
-	}if(keyIsDown(50)){
+	}if(mouseIsPressed && scrollPoint==2){
 		p1.x=mouseX;
 		p1.y=mouseY;
-	}if(keyIsDown(51)){
+	}if(mouseIsPressed && scrollPoint==3){
 		p2.x=mouseX;
 		p2.y=mouseY;
-	}if(keyIsDown(52)){
+	}if(mouseIsPressed && scrollPoint==4){
 		p3.x=mouseX;
 		p3.y=mouseY;
 	}
@@ -139,6 +143,10 @@ function draw()
 
 	
 	frameRate(60);
+	fill(250);
+	textSize(20);
+	text("Point: "+scrollPoint, 630, 700);
+
 }
 
 
@@ -175,5 +183,19 @@ function draw_curve(p_1,p_2,p_3,p_4, c_1,c_2){
 
 		point(bCurvePoint);
 		//console.log(bCurvePoint)
+	}
+}
+
+// Change direction when the user scrolls the mouse wheel.
+function mouseWheel(event) {
+	if (event.delta > 0) {
+	  scrollPoint--
+	} else {
+		scrollPoint++
+	}
+	if(scrollPoint<1){
+		scrollPoint=maxPoints;
+	}if(scrollPoint>maxPoints){
+		scrollPoint=1;
 	}
 }
