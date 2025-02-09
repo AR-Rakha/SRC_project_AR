@@ -173,7 +173,11 @@ function calcFirstControlPoint(newPoint,anchorPoint,previousAnchorPoint,NextAnch
 function draw_curve(p_1,p_2,p_3,p_4, c_1,c_2){
 	for (let i = 0; i <= 1; i+=0.002) {
 		let bCurvePoint= createVector(0,0);
+		let bCurvePoint1= createVector(0,0);
+		let bCurvePoint2= createVector(0,0);
 
+		//Bernstein Polynomial Form
+		//b(t)=p0·(−t^3+3·t^2−3·t+1)+p1·(3·t^3−6·t^2+3·t)+p2·(−3·t^3+3·t^2)+p3·(t^3)
 		bCurvePoint.x=p_1.x*(-pow(i, 3)+3*pow(i,2)-3*i+1)+p_2.x*(3*pow(i,3)-6*pow(i,2)+3*i)+p_3.x*(-3*pow(i,3)+3*pow(i,2))+p_4.x*(pow(i,3))
 		bCurvePoint.y=p_1.y*(-pow(i, 3)+3*pow(i,2)-3*i+1)+p_2.y*(3*pow(i,3)-6*pow(i,2)+3*i)+p_3.y*(-3*pow(i,3)+3*pow(i,2))+p_4.y*(pow(i,3))
 
@@ -181,9 +185,42 @@ function draw_curve(p_1,p_2,p_3,p_4, c_1,c_2){
 		stroke(lerpColor(c_1, c_2, i));
 		strokeWeight(4);
 
+		bCurvePoint1.x=bCurvePoint.x+curveNormalVector(p_1,p_2,p_3,p_4,i,true)*20;
+		bCurvePoint1.y=bCurvePoint.y+curveNormalVector(p_1,p_2,p_3,p_4,i,false)*20;
+
+		bCurvePoint2.x=bCurvePoint.x+curveNormalVector(p_1,p_2,p_3,p_4,i,true)*-20;
+		bCurvePoint2.y=bCurvePoint.y+curveNormalVector(p_1,p_2,p_3,p_4,i,false)*-20;
+
 		point(bCurvePoint);
+		point(bCurvePoint1);
+		point(bCurvePoint2);
 		//console.log(bCurvePoint)
 	}
+}
+
+function curveNormalVector(p_1,p_2,p_3,p_4,time,isX){
+	let bCurveTangentDir= createVector(0,0);
+	let bCurveNormal= createVector(0,0);
+
+
+	//b′(t)=p0·(−3·t^2+6·t−3)+p1·(9·t^2−12·t+3)+p2·(−9·t^2+6·t)+p3·(3·t^2)
+	bCurveTangentDir.x=p_1.x*(-3*pow(time, 2)+6*time-3)+p_2.x*(9*pow(time,2)-12*time+3)+p_3.x*(-9*pow(time,2)+6*time)+p_4.x*(3*pow(time,2));
+	bCurveTangentDir.y=p_1.y*(-3*pow(time, 2)+6*time-3)+p_2.y*(9*pow(time,2)-12*time+3)+p_3.y*(-9*pow(time,2)+6*time)+p_4.y*(3*pow(time,2));
+
+	//Rotate vector 90 degrees
+	//(x,y)=>(-y,x)
+	bCurveNormal.x=-bCurveTangentDir.y;
+	bCurveNormal.y=bCurveTangentDir.x;
+
+	bCurveNormal.normalize();
+
+	if(isX==true){
+		return bCurveNormal.x;
+	}else{
+		return bCurveNormal.y;
+	}
+	
+
 }
 
 // Change direction when the user scrolls the mouse wheel.
