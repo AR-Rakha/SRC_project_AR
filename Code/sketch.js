@@ -54,7 +54,7 @@ function setup()
 	
 	colorMode(HSB);
 
-	createCanvas(720, 720);
+	createCanvas(1400, 720);
 	p0_0 = createVector(0, 0);
 	p0 = createVector(20, 380);
   	p0_1 = createVector(20, 20);
