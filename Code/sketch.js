@@ -3,6 +3,7 @@ let p0;
 let p0_1;
 
 let p0_color;
+let p0_endColor;
 
 let p1_0;
 let p1;
@@ -22,11 +23,21 @@ let p3_4;
 
 let p3_color;
 
+let p4_3;
+let p4;
+let p4_5;
+
+let p4_color;
+
+let p5_4;
+let p5;
+let p5_0;
+
+let p5_color;
+
 let s=3;
 
-let scrollPoint=1;
-
-let maxPoints=4;
+let maxPoints = 6;
 
 //Catmull–Rom spline
 //This spine consists if multiple cubic bezier curves
@@ -48,26 +59,38 @@ function setup()
 	p0 = createVector(20, 380);
   	p0_1 = createVector(20, 20);
 
+	p0_endColor=color(359.99,85,90);
 	p0_color=color(0,85,90);
 
 	p1_0 = createVector(380, 20);
   	p1 = createVector(380, 380);
 	p1_2 = createVector(0, 0);
 
-	p1_color=color(90,85,90);
+	p1_color=color(360/maxPoints*1,85,90);
 
 	p2_1 = createVector(0, 0);
 	p2 = createVector(0, 0);
 	p2_3 = createVector(0, 0);
 
-	p2_color=color(180,85,90);
+	p2_color=color(360/maxPoints*2,85,90);
 
 	p3_2 = createVector(0, 0);
 	p3 = createVector(0, 0);
 	p3_4 = createVector(0, 0);
 
-	p3_color=color(270,85,90);
+	p3_color=color(360/maxPoints*3,85,90);
 
+	p4_3 = createVector(0, 0);
+	p4 = createVector(0, 0);
+	p4_5 = createVector(0, 0);
+
+	p4_color=color(360/maxPoints*4,85,90);
+	
+	p5_4 = createVector(0, 0);
+	p5 = createVector(0, 0);
+	p5_0 = createVector(0, 0);
+
+	p5_color=color(360/maxPoints*5,85,90);
 
 }
 
@@ -77,78 +100,83 @@ function draw()
 
 	
 
-	if(mouseIsPressed && scrollPoint==1){
-		p0.x=mouseX;
-		p0.y=mouseY;
-	}if(mouseIsPressed && scrollPoint==2){
-		p1.x=mouseX;
-		p1.y=mouseY;
-	}if(mouseIsPressed && scrollPoint==3){
-		p2.x=mouseX;
-		p2.y=mouseY;
-	}if(mouseIsPressed && scrollPoint==4){
-		p3.x=mouseX;
-		p3.y=mouseY;
-	}
+	//buttons to move points
+	//eleminates the problem of to or more overlaping points
+	if(keyIsDown(49)){PTM(p0);}
+	if(keyIsDown(50)){PTM(p1);}
+	if(keyIsDown(51)){PTM(p2);}
+	if(keyIsDown(52)){PTM(p3);}
+	if(keyIsDown(53)){PTM(p4);}
+	if(keyIsDown(54)){PTM(p5);}
 
 
-	EndAncorPoint(p0_0,p0,p1);
-	EndAncorPoint(p3_4,p3,p2);
-
-
-	calcFirstControlPoint(p0_1,p0,p0_0,p1);
+	calcFirstControlPoint(p0_1,p0,p3,p1);
 	calcFirstControlPoint(p1_2,p1,p0,p2);
 	calcFirstControlPoint(p2_3,p2,p1,p3);
+	calcFirstControlPoint(p3_4,p3,p2,p4);
+	calcFirstControlPoint(p4_5,p4,p3,p5);
+	calcFirstControlPoint(p5_0,p5,p4,p0);
 	
 	//Mirror
+	mirrorPoints(p0_0,p0,p0_1);
 	mirrorPoints(p1_0,p1,p1_2);
 	mirrorPoints(p2_1,p2,p2_3);
 	mirrorPoints(p3_2,p3,p3_4);
+	mirrorPoints(p4_3,p4,p4_5);
+	mirrorPoints(p5_4,p5,p5_0);
 	
 	//Draw
 	draw_curve(p0,p0_1,p1_0,p1,p0_color,p1_color);
 	draw_curve(p1,p1_2,p2_1,p2,p1_color,p2_color);
 	draw_curve(p2,p2_3,p3_2,p3,p2_color,p3_color);
+	draw_curve(p3,p3_4,p4_3,p4,p3_color,p4_color);
+	draw_curve(p4,p4_5,p5_4,p5,p4_color,p5_color);
+	draw_curve(p5,p5_0,p0_0,p0,p5_color,p0_endColor);
 
 	stroke(250);
 
 
 	strokeWeight(2);
+	point(p0_0);
+	point(p0_1);
+	point(p1_0);
 	point(p1_2);
 	point(p2_1);
-	point(p0_0);
 	point(p2_3);
 	point(p3_2);
 	point(p3_4);
-	point(p0_1);
-	point(p1_0);
+	point(p4_3);
+	point(p4_5);
+	point(p5_4);
+	point(p5_0);
+	
 
 	strokeWeight(6);
 	point(p0);
 	point(p1);
 	point(p2);
 	point(p3);
+	point(p4);
+	point(p5);
 
 	strokeWeight(0.1);
 	line(p0_0.x, p0_0.y, p0_1.x, p0_1.y);
-	
 	line(p1_0.x, p1_0.y, p1_2.x, p1_2.y);
 	line(p2_1.x, p2_1.y, p2_3.x, p2_3.y);
 	line(p3_2.x, p3_2.y, p3_4.x, p3_4.y);
-
-
-
-
-		
-
+	line(p4_3.x, p4_3.y, p4_5.x, p4_5.y);
+	line(p5_4.x, p5_4.y, p5_0.x, p5_0.y);
+	
 	
 	frameRate(60);
-	fill(250);
-	textSize(20);
-	text("Point: "+scrollPoint, 630, 700);
 
 }
 
+// point to mouse funktion
+function PTM(_p){
+	_p.x=mouseX;
+	_p.y=mouseY;
+}
 
 function lerpPoint(p_1,p_2,time){
 	return createVector(lerp(p_1.x, p_2.x, time), lerp(p_1.y, p_2.y, time))
@@ -158,6 +186,7 @@ function mirrorPoints(newPoint,centerPoint,pointToMirror){
 	newPoint.x= centerPoint.x-(pointToMirror.x-centerPoint.x);
 	newPoint.y= centerPoint.y-(pointToMirror.y-centerPoint.y);
 }
+
 function EndAncorPoint(newPoint,centerPoint,pointToMirror){
 	newPoint.x= centerPoint.x-(pointToMirror.x-centerPoint.x)/s;
 	newPoint.y= centerPoint.y-(pointToMirror.y-centerPoint.y)/s;
@@ -168,7 +197,6 @@ function calcFirstControlPoint(newPoint,anchorPoint,previousAnchorPoint,NextAnch
 	newPoint.x=((NextAnchorPoint.x-previousAnchorPoint.x)/s+anchorPoint.x);
 	newPoint.y=((NextAnchorPoint.y-previousAnchorPoint.y)/s+anchorPoint.y);
 }
-
 
 function draw_curve(p_1,p_2,p_3,p_4, c_1,c_2){
 	for (let i = 0; i <= 1; i+=0.002) {
@@ -223,16 +251,3 @@ function curveNormalVector(p_1,p_2,p_3,p_4,time,isX){
 
 }
 
-// Change direction when the user scrolls the mouse wheel.
-function mouseWheel(event) {
-	if (event.delta > 0) {
-	  scrollPoint--
-	} else {
-		scrollPoint++
-	}
-	if(scrollPoint<1){
-		scrollPoint=maxPoints;
-	}if(scrollPoint>maxPoints){
-		scrollPoint=1;
-	}
-}
