@@ -110,7 +110,7 @@ function draw()
 	if(keyIsDown(54)){PTM(p5);}
 
 
-	calcFirstControlPoint(p0_1,p0,p3,p1);
+	calcFirstControlPoint(p0_1,p0,p5,p1);
 	calcFirstControlPoint(p1_2,p1,p0,p2);
 	calcFirstControlPoint(p2_3,p2,p1,p3);
 	calcFirstControlPoint(p3_4,p3,p2,p4);
