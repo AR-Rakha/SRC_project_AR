@@ -3,7 +3,7 @@ let p0;
 let p0_1;
 
 let p0_color;
-let p0_endColor;
+
 
 let p1_0;
 let p1;
@@ -39,6 +39,14 @@ let s=3;
 
 let maxPoints = 6;
 
+
+let blueColor
+let yellowColor
+
+let checkbox1;
+let checkbox2;
+let checkbox3;
+
 //Catmull–Rom spline
 //This spine consists if multiple cubic bezier curves
 //First we have some anchor points
@@ -52,51 +60,62 @@ let maxPoints = 6;
 function setup() 
 {
 	
-	colorMode(HSB);
+	//colorMode(HSB);
 
-	createCanvas(1400, 720);
+	createCanvas(windowWidth, windowHeight-4);
 	p0_0 = createVector(0, 0);
-	p0 = createVector(20, 380);
+	p0 = createVector(windowWidth/2+300, windowHeight/2);
   	p0_1 = createVector(20, 20);
 
-	p0_endColor=color(359.99,85,90);
-	p0_color=color(0,85,90);
+	
+	p0_color=color(200,0,0,30);
 
 	p1_0 = createVector(380, 20);
-  	p1 = createVector(380, 380);
+  	p1 = createVector((windowWidth/2)-200, windowHeight/2+250);
 	p1_2 = createVector(0, 0);
 
-	p1_color=color(360/maxPoints*1,85,90);
+	p1_color=color(200,200,0,30);
 
 	p2_1 = createVector(0, 0);
-	p2 = createVector(0, 0);
+	p2 = createVector((windowWidth/2)+200, windowHeight/2-250);
 	p2_3 = createVector(0, 0);
 
-	p2_color=color(360/maxPoints*2,85,90);
+	p2_color=color(0,200,0,30);
 
 	p3_2 = createVector(0, 0);
-	p3 = createVector(0, 0);
+	p3 = createVector((windowWidth/2)-300, windowHeight/2);
 	p3_4 = createVector(0, 0);
 
-	p3_color=color(360/maxPoints*3,85,90);
+	p3_color=color(0,200,200,30);
 
 	p4_3 = createVector(0, 0);
-	p4 = createVector(0, 0);
+	p4 = createVector((windowWidth/2)+200, windowHeight/2+250);
 	p4_5 = createVector(0, 0);
 
-	p4_color=color(360/maxPoints*4,85,90);
+	p4_color=color(0,0,200,30);
 	
 	p5_4 = createVector(0, 0);
-	p5 = createVector(0, 0);
+	p5 = createVector((windowWidth/2)-200, windowHeight/2-250);
 	p5_0 = createVector(0, 0);
 
-	p5_color=color(360/maxPoints*5,85,90);
+	p5_color=color(200,0,200,30);
+
+	blueColor=color(0,0,220);
+	yellowColor=color(220,220,0);
+
+	checkbox1 = createCheckbox(' Show curve', true);
+  	checkbox1.position(0, 100);
+	checkbox2 = createCheckbox(' Show curve anchor and control points', true);
+  	checkbox2.position(0, 125);
+	checkbox3 = createCheckbox(' Show race track lines', true);
+  	checkbox3.position(0, 150);
+	
 
 }
 
 function draw()
 {
-	background(0);
+	background(255);
 
 	
 
@@ -108,6 +127,8 @@ function draw()
 	if(keyIsDown(52)){PTM(p3);}
 	if(keyIsDown(53)){PTM(p4);}
 	if(keyIsDown(54)){PTM(p5);}
+
+	
 
 
 	calcFirstControlPoint(p0_1,p0,p5,p1);
@@ -131,41 +152,51 @@ function draw()
 	draw_curve(p2,p2_3,p3_2,p3,p2_color,p3_color);
 	draw_curve(p3,p3_4,p4_3,p4,p3_color,p4_color);
 	draw_curve(p4,p4_5,p5_4,p5,p4_color,p5_color);
-	draw_curve(p5,p5_0,p0_0,p0,p5_color,p0_endColor);
+	draw_curve(p5,p5_0,p0_0,p0,p5_color,p0_color);
 
-	stroke(250);
+	stroke(0);
 
+	if(checkbox2.checked()){
+		strokeWeight(3);
+		point(p0_0);
+		point(p0_1);
+		point(p1_0);
+		point(p1_2);
+		point(p2_1);
+		point(p2_3);
+		point(p3_2);
+		point(p3_4);
+		point(p4_3);
+		point(p4_5);
+		point(p5_4);
+		point(p5_0);
+		
 
-	strokeWeight(2);
-	point(p0_0);
-	point(p0_1);
-	point(p1_0);
-	point(p1_2);
-	point(p2_1);
-	point(p2_3);
-	point(p3_2);
-	point(p3_4);
-	point(p4_3);
-	point(p4_5);
-	point(p5_4);
-	point(p5_0);
-	
+		strokeWeight(6);
+		point(p0);
+		point(p1);
+		point(p2);
+		point(p3);
+		point(p4);
+		point(p5);
 
-	strokeWeight(6);
-	point(p0);
-	point(p1);
-	point(p2);
-	point(p3);
-	point(p4);
-	point(p5);
+		strokeWeight(0.3);
+		line(p0_0.x, p0_0.y, p0_1.x, p0_1.y);
+		line(p1_0.x, p1_0.y, p1_2.x, p1_2.y);
+		line(p2_1.x, p2_1.y, p2_3.x, p2_3.y);
+		line(p3_2.x, p3_2.y, p3_4.x, p3_4.y);
+		line(p4_3.x, p4_3.y, p4_5.x, p4_5.y);
+		line(p5_4.x, p5_4.y, p5_0.x, p5_0.y);
 
-	strokeWeight(0.1);
-	line(p0_0.x, p0_0.y, p0_1.x, p0_1.y);
-	line(p1_0.x, p1_0.y, p1_2.x, p1_2.y);
-	line(p2_1.x, p2_1.y, p2_3.x, p2_3.y);
-	line(p3_2.x, p3_2.y, p3_4.x, p3_4.y);
-	line(p4_3.x, p4_3.y, p4_5.x, p4_5.y);
-	line(p5_4.x, p5_4.y, p5_0.x, p5_0.y);
+		noStroke()
+		textSize(10)
+		text("P1", p0.x+20, p0.y+20);
+		text("P2", p1.x+20, p1.y+20);
+		text("P3", p2.x+20, p2.y+20);
+		text("P4", p3.x+20, p3.y+20);
+		text("P5", p4.x+20, p4.y+20);
+		text("P6", p5.x+20, p5.y+20);
+	}
 	
 	
 	frameRate(60);
@@ -219,9 +250,15 @@ function draw_curve(p_1,p_2,p_3,p_4, c_1,c_2){
 		bCurvePoint2.x=bCurvePoint.x+curveNormalVector(p_1,p_2,p_3,p_4,i,true)*-20;
 		bCurvePoint2.y=bCurvePoint.y+curveNormalVector(p_1,p_2,p_3,p_4,i,false)*-20;
 
-		point(bCurvePoint);
-		point(bCurvePoint1);
-		point(bCurvePoint2);
+		if(checkbox1.checked()){
+			point(bCurvePoint);
+		}
+
+		stroke(lerpColor(blueColor, yellowColor, sin(i*100*PI)*0.5+0.5));
+		if(checkbox3.checked()){
+			point(bCurvePoint1);
+			point(bCurvePoint2);
+		}
 		//console.log(bCurvePoint)
 	}
 }
