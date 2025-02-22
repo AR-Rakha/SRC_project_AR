@@ -1,8 +1,14 @@
 # SRC_project_AR
-Hello github
+Du kan flytte punkterne ved trykke på talknapperne der passer med punkternes navne
 
-and git
+1 = P1
 
-and G
+2 = P2
 
-and _
+3 = P3
+
+4 = P4
+
+5 = P5
+
+6 = P6
