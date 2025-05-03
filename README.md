@@ -8,6 +8,7 @@ In this project i have made a race track builder using splines and bezier curves
 
 ![](BezierGif.gif)
 
+### Control Points
 Use the numbers 1 through 6 on your keyboard to control the position of the control points
 
 1 = P1
@@ -21,3 +22,7 @@ Use the numbers 1 through 6 on your keyboard to control the position of the cont
 5 = P5
 
 6 = P6
+
+### Curve/Track
+
+Use the Checkboxes on the left side of the screen to toggle on and of the visibility of the control points, curve, and track
