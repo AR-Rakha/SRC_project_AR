@@ -1,8 +1,14 @@
 # SRC_project_AR
 
+## SRC project - Math & Programming
+
+In this project i have made a race track builder using splines and bezier curves
+
+## Manual
+
 ![](BezierGif.gif)
 
-Use the numbers 1 through 6 to control the position of the control points
+Use the numbers 1 through 6 on your keyboard to control the position of the control points
 
 1 = P1
 
