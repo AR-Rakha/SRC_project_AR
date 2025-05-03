@@ -1,5 +1,8 @@
 # SRC_project_AR
-Du kan flytte punkterne ved trykke på talknapperne der passer med punkternes navne
+
+![](BezierGif.gif)
+
+Use the numbers 1 through 6 to control the position of the control points
 
 1 = P1
 
